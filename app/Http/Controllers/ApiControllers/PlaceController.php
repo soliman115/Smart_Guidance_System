@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class PlaceController extends Controller
 
 {
-        //function to insert places
+        //insert places
         public function insertPlace(Request $request)
         {
             $validator = Validator::make($request->all(), [
@@ -43,7 +43,7 @@ class PlaceController extends Controller
             return "Record with id $id inserted successfully!";
         }//end insert
 
-        //function to retrive places
+        //retrive places
         public function getPlaces(){
             $places= PlaceResource::collection(place::get());
             $array = [
@@ -54,7 +54,7 @@ class PlaceController extends Controller
             return response($array);
         }//end retrive
 
-        //function to update places
+        //update places
         public function updatePlace(Request $request, $id)
         {
             $validator = Validator::make($request->all(), [
@@ -87,7 +87,7 @@ class PlaceController extends Controller
 
 
 
-        //function to delete places
+        //delete places
         public function deletePlace($id)
         {
             $place = Place::find($id);

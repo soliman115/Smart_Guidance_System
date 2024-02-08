@@ -12,7 +12,7 @@ use App\Http\Resources\RegionResource;
 class RegionController extends Controller
 {
     //
-    //function to insert Regions
+    //insert Regions
     public function insertRegion(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -30,7 +30,7 @@ class RegionController extends Controller
         return "Record with region  $region inserted successfully!";
     }//end insert
 
-//function to retrive Regions
+//retrive Regions
 public function getRegions(){
     $Regions= RegionResource::collection(Region::get());
     $array = [
@@ -41,7 +41,7 @@ public function getRegions(){
     return response($array);
 }//end retrive
 
-//function to update Regions
+//update Regions
 public function updateRegion(Request $request, $id)
 {
     $validator = Validator::make($request->all(), [
@@ -71,7 +71,7 @@ public function updateRegion(Request $request, $id)
 
 
 
-//function to delete Regions
+//delete Regions
 public function deleteRegion($id)
 {
     $Region = Region::find($id);

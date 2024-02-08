@@ -14,7 +14,7 @@ use App\Models\Region;
 
 class RouteController extends Controller
 {
-    //function to insert routes
+    //insert routes
     public function insertRoute(Request $request)
 {
     // Validate input fields
@@ -36,7 +36,7 @@ class RouteController extends Controller
 // end insert
 
 
-//function to retrive Routes
+//retrive Routes
 public function getRoutes(){
     $Routes= RouteResource::collection(Route::get());
     $array = [
@@ -47,7 +47,7 @@ public function getRoutes(){
     return response($array);
 }//end retrive
 
-//function to update Routes
+//update Routes
 public function updateRoute(Request $request, $id)
 { 
     $validator = Validator::make($request->all(), [
@@ -74,7 +74,7 @@ public function updateRoute(Request $request, $id)
 
 
 
-//function to delete Routes
+//delete Routes
 public function deleteRoute($id)
 {
     $Route = Route::find($id);
