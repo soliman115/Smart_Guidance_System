@@ -36,5 +36,4 @@ Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
 
-
 Route::get('/getRoute/{source}/{Destination}', [RouteController::class,'getBestPass']);
