@@ -60,7 +60,7 @@ class PlaceController extends Controller
             $validator = Validator::make($request->all(), [
                 'id' => 'required|unique:places,id,'.$id,
                 'name' => 'required|unique:places,name,'.$id,
-                'region' => 'required'
+                'region_id' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -73,13 +73,13 @@ class PlaceController extends Controller
             }
             
             //$place->update($request->all());
-            $place->id = $request->id;
-            $place->name = $request->name;
-            $place->region = $request->region;
-            $place->guide_word = $request->guide_word;
-            $place->save();
+            // $place->id = $request->id;
+            // $place->name = $request->name;
+            // $place->region = $request->region;
+            // $place->guide_word = $request->guide_word;
+            // $place->save();
             //$place= place::create($validator->validated());
-
+            $place->update($request->all());
             return "Record with id $id updated successfully!";
 
 

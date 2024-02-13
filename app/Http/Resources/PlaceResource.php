@@ -17,8 +17,11 @@ class PlaceResource extends JsonResource
         return[
             'place id'=>$this->id,
             'place name'=> $this->name,
-            'region'=> $this->region,
-            'guide word'=> $this->guide_word
+            'region id'=> $this->region_id,
+            'guide word'=> $this->guide_word,
+            'x coordinate'=>$this->x_coordinate,
+            'y coordinate'=>$this->y_coordinate,
+            'building id'=>$this->building_id
         ];
     }
 }
