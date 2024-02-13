@@ -20,7 +20,7 @@ use App\Http\Controllers\ApiControllers\RouteController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+// place routes
 Route::get('/places',[PlaceController::class,'getPlaces']);
 Route::post('/place',[PlaceController::class,'insertPlace']);
 Route::put('/updateplace/{id}',[PlaceController::class,'updatePlace']);
@@ -35,6 +35,5 @@ Route::post('/region',[RegionController::class,'insertRegion']);
 Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
-
 
 Route::get('/getRoute/{source}/{Destination}', [RouteController::class,'getBestPass']);
