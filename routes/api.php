@@ -25,7 +25,7 @@ Route::get('/places',[PlaceController::class,'getPlaces']);
 Route::post('/place',[PlaceController::class,'insertPlace']);
 Route::put('/updateplace/{id}',[PlaceController::class,'updatePlace']);
 Route::delete('/deleteplace/{id}',[PlaceController::class,'deletePlace']);
-
+// route routes
 Route::get('/routes',[RouteController::class,'getRoutes']);
 Route::post('/route',[RouteController::class,'insertRoute']);
 Route::put('/updateRoute/{id}',[RouteController::class,'updateRoute']);
