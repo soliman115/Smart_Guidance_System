@@ -52,6 +52,10 @@ class PlaceController extends Controller
                 'status'=>200
             ];
             return response($array);
+
+        // $Service =Place::find(3)->Service;
+        // return $Service;
+
         }//end retrive
 
         //update places
