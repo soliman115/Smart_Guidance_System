@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiControllers\AdminDashboardController;
-use App\Http\Controllers\ApiControllers\VisitController;
+use App\Http\Controllers\ApiControllers\VisitsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,5 +41,5 @@ Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
 Route::get('/getRoute/{source}/{Destination}', [RouteController::class,'getBestPass']);
 
 // dashboard routes
-Route::post('/visits', [VisitController::class,'store']);
+Route::post('/visits', [VisitsController::class,'store']);
 Route::get('/dashboard-data', [AdminDashboardController::class,'getStatistics']);
