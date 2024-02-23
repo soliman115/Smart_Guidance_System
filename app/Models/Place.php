@@ -17,5 +17,9 @@ class Place extends Model
     {
         return $this->belongsTo(Region::class);
     }
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
+    }
 
 }
