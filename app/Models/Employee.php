@@ -13,8 +13,8 @@ class Employee extends Model
     public $timestamps = false;
     protected $fillable = ['name', 'service_id', 'department', 'photo'];
     ////belong
-    // public function location(){
-    //     return $this->belongsTo(Location::class);
+    // public function Place(){
+    //     return $this->belongsTo(Place::class);
     // }
     public function service()
     {

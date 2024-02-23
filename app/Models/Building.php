@@ -14,7 +14,7 @@ class Building extends Model
     ////has
     public function location()
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany(Place::class);
     }
 
     // public function service(){

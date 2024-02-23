@@ -9,17 +9,16 @@ class Service extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['name', 'location_id', 'description'];
+    protected $fillable = ['name', 'place_id', 'description'];
 
     /////has
     public function employee()
     {
         return $this->hasMany(Employee::class);
     }
-
     ////belong
     public function location()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Place::class);
     }
 }
