@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +23,15 @@ use App\Http\Controllers\ApiControllers\RouteController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/login',[AuthController::class,'login']);
+
+Route::group(['prefix'=>'/profile'],function (){
+    Route::post('/update',[UserController::class,'update_info']);
+});
+
 // place routes
 Route::get('/places',[PlaceController::class,'getPlaces']);
 Route::post('/place',[PlaceController::class,'insertPlace']);
