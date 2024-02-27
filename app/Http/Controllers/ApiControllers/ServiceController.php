@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ServiceResource;
@@ -15,6 +15,11 @@ class ServiceController extends Controller
     {
         $Service = Service::get();
         return $this->apiResponse($Service, "ok", 200);
+
+      //return employees to the service
+        // $Service = Service::find(1);
+        // return $Service->employees;
+
     }
 
     public function show($id)

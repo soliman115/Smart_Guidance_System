@@ -12,9 +12,9 @@ class Service extends Model
     protected $fillable = ['name', 'place_id', 'description'];
 
     /////has
-    public function employee()
+    public function employees()
     {
-        return $this->hasMany(Employee::class);
+        return $this->belongsToMany(Employee::class);
     }
     ////belong
     public function location()

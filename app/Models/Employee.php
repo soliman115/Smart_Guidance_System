@@ -11,15 +11,16 @@ class Employee extends Model
 
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['name', 'service_id', 'department', 'photo'];
+    protected $fillable = ['name', 'place_id', 'employee_job', 'photo'];
     ////belong
     // public function Place(){
     //     return $this->belongsTo(Place::class);
     // }
-    public function service()
-    {
-        return $this->belongsTo(Service::class);
-    }
+    public function services()
+        {
+            return $this->belongsToMany(Service::class);
+        }
+    
     // public function building(){
     //     return $this->belongsTo(Building::class);
     // }

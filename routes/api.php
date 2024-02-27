@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
+use App\Http\Controllers\ApiControllers\EmployeeController;
+use App\Http\Controllers\ApiControllers\ServiceController;
+use App\Http\Controllers\ApiControllers\BuildingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes

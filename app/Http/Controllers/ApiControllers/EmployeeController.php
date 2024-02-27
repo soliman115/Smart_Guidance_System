@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EmployeeResource;
@@ -15,8 +15,12 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $employees = Employee::get();
-        return $this->apiResponse($employees, "ok", 200);
+        // $employees = Employee::get();
+        // return $this->apiResponse($employees, "ok", 200);
+        
+      //return employees to the service
+        $employee = Employee::find(2);
+        return $employee->services;
     }
 
     public function show($id)
@@ -34,8 +38,8 @@ class EmployeeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'service_id' => 'required',
-            'department' => 'required',
+            'place_id' => 'required',
+            'employee_job' => 'required',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -65,8 +69,8 @@ class EmployeeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'service_id' => 'required',
-            'department' => 'required',
+            'place_id' => 'required',
+            'employee_job' => 'required',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -119,3 +123,4 @@ class EmployeeController extends Controller
         return $this->apiResponse(null, 'The Employee is deleted', 200);
     }
 }
+

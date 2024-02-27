@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -12,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('employee_service', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('place_id')->constrained('places')->cascadeOnDelete();
-            $table->string('name');
-            $table->string('employee_job');        
-            $table->string('photo');
+            $table->integer('employee_id');
+            $table->integer('service_id');
+            $table->timestamps();
         });
     }
+
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('employee_service');
     }
 };
