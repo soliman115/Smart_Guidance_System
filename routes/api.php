@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
+use App\Http\Controllers\ApiControllers\EmployeeController;
+use App\Http\Controllers\ApiControllers\ServiceController;
+use App\Http\Controllers\ApiControllers\BuildingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,5 +38,23 @@ Route::post('/region',[RegionController::class,'insertRegion']);
 Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
+
+Route::get('buildings',[BuildingController::class,'index']);
+Route::get('/buildings/{id}',[BuildingController::class,'show']);
+Route::post('buildings',[BuildingController::class,'store']);
+Route::post('buildings/{id}',[BuildingController::class,'update']);
+Route::post('/building/{id}',[BuildingController::class,'destroy']);
+
+Route::get('services',[ServiceController::class,'index']);
+Route::get('/services/{id}',[ServiceController::class,'show']);
+Route::post('services',[ServiceController::class,'store']);
+Route::post('services/{id}',[ServiceController::class,'update']);
+Route::post('/service/{id}',[ServiceController::class,'destroy']);
+
+Route::get('employees',[EmployeeController::class,'index']);
+Route::get('/employees/{id}',[EmployeeController::class,'show']);
+Route::post('employees',[EmployeeController::class,'store']);
+Route::post('employees/{id}',[EmployeeController::class,'update']);
+Route::post('/employee/{id}',[EmployeeController::class,'destroy']);
 
 Route::get('/getRoute/{source}/{Destination}', [RouteController::class,'getBestPass']);

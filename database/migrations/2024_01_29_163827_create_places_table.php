@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Building;
 use App\Models\Region;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,7 +20,8 @@ return new class extends Migration
             $table->string('guide_word')->nullable();
             $table->integer('x_coordinate');
             $table->integer('y_coordinate');
-            $table->integer('building_id');
+            $table->foreignIdFor(Building::class);
+          //$table->foreignId('building_id')->constrained('buildings')->cascadeOnDelete() ;
             $table->timestamps();
         });
         
