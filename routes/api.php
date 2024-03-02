@@ -27,6 +27,13 @@ use App\Http\Controllers\UserController;
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
+Route::post('/check-code',[AuthController::class,'check_code']);
+Route::post('/new-password',[AuthController::class,'new_password']);
+
+Route::get('send-mail', function () {
+    
+});
+
 
 Route::group(['prefix'=>'/profile'],function (){
     Route::post('/update',[UserController::class,'update_info']);
