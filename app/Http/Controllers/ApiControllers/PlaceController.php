@@ -53,8 +53,12 @@ class PlaceController extends Controller
             ];
             return response($array);
 
+           // service of place
         // $Service =Place::find(3)->Service;
         // return $Service;
+           // employee of place
+        // $employee =Place::find(3)->employee;
+        // return $employee;
 
         }//end retrive
 

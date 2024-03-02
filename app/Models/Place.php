@@ -22,14 +22,19 @@ class Place extends Model
         return $this->hasMany(Visit::class);
     }
 
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
+    }
+    
     public function Service()
     {
         return $this->hasMany(Service::class);
     }
 
     ///belong
-    public function building()
+    public function employee()
     {
-        return $this->belongsTo(Building::class);
+        return $this->hasMany(Employee::class);
     }
 }

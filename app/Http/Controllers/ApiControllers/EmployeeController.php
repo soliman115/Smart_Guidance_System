@@ -15,12 +15,15 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        // $employees = Employee::get();
-        // return $this->apiResponse($employees, "ok", 200);
+        $employees = Employee::get();
+        return $this->apiResponse($employees, "ok", 200);
         
-      //return employees to the service
-        $employee = Employee::find(2);
-        return $employee->services;
+        //return service to the employee
+        // $employee = Employee::find(2);
+        // return $employee->services;
+        //return place to the employee
+        // $employee = Employee::find(2);
+        // return $employee->place;
     }
 
     public function show($id)
