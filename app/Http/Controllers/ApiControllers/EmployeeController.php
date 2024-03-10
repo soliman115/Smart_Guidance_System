@@ -17,9 +17,9 @@ class EmployeeController extends Controller
     {
         $employees = Employee::get();
         return $this->apiResponse($employees, "ok", 200);
-        
+
         //return service to the employee
-        // $employee = Employee::find(2);
+        // $employee = Employee::find(23);
         // return $employee->services;
         //return place to the employee
         // $employee = Employee::find(2);
