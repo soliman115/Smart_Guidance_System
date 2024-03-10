@@ -12,7 +12,7 @@ class Building extends Model
     public $timestamps = false;
     protected $fillable = ['name', 'address', 'description', 'longitude', 'latitude', 'photo'];
     ////has
-    public function location()
+    public function place()
     {
         return $this->hasMany(Place::class);
     }

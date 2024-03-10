@@ -17,7 +17,7 @@ class Service extends Model
         return $this->belongsToMany(Employee::class);
     }
     ////belong
-    public function location()
+    public function Place()
     {
         return $this->belongsTo(Place::class);
     }
