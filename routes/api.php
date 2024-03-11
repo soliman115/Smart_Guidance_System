@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApiControllers\EmployeeController;
 use App\Http\Controllers\ApiControllers\ServiceController;
 use App\Http\Controllers\ApiControllers\BuildingController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +26,22 @@ use App\Http\Controllers\ApiControllers\BuildingController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/login',[AuthController::class,'login']);
+Route::post('/check-code',[AuthController::class,'check_code']);
+Route::post('/new-password',[AuthController::class,'new_password']);
+
+Route::get('send-mail', function () {
+    
+});
+
+
+Route::group(['prefix'=>'/profile'],function (){
+    Route::post('/update',[UserController::class,'update_info']);
+});
+
 // place routes
 Route::get('/places', [PlaceController::class, 'getPlaces']);
 Route::post('/place', [PlaceController::class, 'insertPlace']);
@@ -38,6 +57,7 @@ Route::post('/region', [RegionController::class, 'insertRegion']);
 Route::get('/region', [RegionController::class, 'getRegions']);
 Route::put('/updateRegion/{id}', [RegionController::class, 'updateRegion']);
 Route::delete('/deleteRegion/{id}', [RegionController::class, 'deleteRegion']);
+Route::get('/getRoute/{source}/{Destination}', [RouteController::class, 'getBestPass']);
 
 Route::get('buildings', [BuildingController::class, 'index']);
 Route::get('/buildings/{id}', [BuildingController::class, 'show']);
@@ -57,4 +77,4 @@ Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
 
-Route::get('/getRoute/{source}/{Destination}', [RouteController::class, 'getBestPass']);
+
