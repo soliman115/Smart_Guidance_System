@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class PlaceController extends Controller
 
 {
-
+        // insert place 
         public function insertPlace(Request $request)
         {
             $validator = Validator::make($request->all(), [
@@ -32,9 +32,8 @@ class PlaceController extends Controller
         
             $id = $request->id;
             return "Record with id $id inserted successfully!";
-        }
+        }//end insert place 
         
-
 
         //retrive places
         public function getPlaces(){
@@ -45,6 +44,12 @@ class PlaceController extends Controller
                 'status'=>200
             ];
             return response($array);
+        // service of place
+        // $Service =Place::find(3)->Service;
+        // return $Service;
+        // employee of place
+        // $employee =Place::find(3)->employee;
+        // return $employee;
         }//end retrive
 
         //update places
@@ -71,11 +76,7 @@ class PlaceController extends Controller
 
             $place->update($request->all());
             return "Record with id $id updated successfully!";
-
-
         }//end update
-
-
 
         //delete places
         public function deletePlace($id)
