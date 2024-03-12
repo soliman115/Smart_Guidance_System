@@ -6,6 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ApiControllers\EmployeeController;
+use App\Http\Controllers\ApiControllers\ServiceController;
+use App\Http\Controllers\ApiControllers\BuildingController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +26,7 @@ use App\Http\Controllers\ApiControllers\RouteController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
 
 // place routes
 Route::get('/places',[PlaceController::class,'getPlaces']);
@@ -40,3 +47,39 @@ Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
 Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'findBestPath']);
 // return graph route 
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
+
+
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/login',[AuthController::class,'login']);
+Route::post('/check-code',[AuthController::class,'check_code']);
+Route::post('/new-password',[AuthController::class,'new_password']);
+
+Route::get('send-mail', function () {
+    
+});
+
+
+Route::group(['prefix'=>'/profile'],function (){
+    Route::post('/update',[UserController::class,'update_info']);
+});
+
+Route::get('buildings', [BuildingController::class, 'index']);
+Route::get('/buildings/{id}', [BuildingController::class, 'show']);
+Route::post('buildings', [BuildingController::class, 'store']);
+Route::post('buildings/{id}', [BuildingController::class, 'update']);
+Route::post('/building/{id}', [BuildingController::class, 'destroy']);
+
+Route::get('services', [ServiceController::class, 'index']);
+Route::get('/services/{id}', [ServiceController::class, 'show']);
+Route::post('services', [ServiceController::class, 'store']);
+Route::post('services/{id}', [ServiceController::class, 'update']);
+Route::post('/service/{id}', [ServiceController::class, 'destroy']);
+
+Route::get('employees', [EmployeeController::class, 'index']);
+Route::get('/employees/{id}', [EmployeeController::class, 'show']);
+Route::post('employees', [EmployeeController::class, 'store']);
+Route::post('employees/{id}', [EmployeeController::class, 'update']);
+Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
+
+
+
