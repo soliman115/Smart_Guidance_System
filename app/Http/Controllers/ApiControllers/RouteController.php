@@ -10,6 +10,8 @@ use App\Http\Resources\RouteResource;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Place;
 use App\Models\Region;
+use App\GraphUtility;
+
 
 
 class RouteController extends Controller
@@ -87,19 +89,15 @@ public function deleteRoute($id)
     return "Record with id $id deleted successfully!";
 }//end delete
 
-//get best path function
-public function getBestPass(string $source , string $destinationPlace)
-{
-    $place= Place::find($destinationPlace);
-    $destinationRegion = $place->Region;
-    $source=Region::find($source);
+//return the graphcreated based on routing table -just For clarification-
+public function returnGraph(){$graph = GraphUtility::constructGraphFromDatabase(); return $graph;}
 
-    return [$source->name,$destinationRegion->name];
-
-}//end 
-
-
-
+//find best path based on the graph
+public function findBestPath( $source ,$destinationPlace) {
+    $source_s = $source;
+    $destination_d = $destinationPlace;
+    return GraphUtility::findShortestPath($source_s ,$destination_d);
+}//end find best path 
 
 }
 

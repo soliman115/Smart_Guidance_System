@@ -20,20 +20,23 @@ use App\Http\Controllers\ApiControllers\RouteController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
 // place routes
 Route::get('/places',[PlaceController::class,'getPlaces']);
 Route::post('/place',[PlaceController::class,'insertPlace']);
 Route::put('/updateplace/{id}',[PlaceController::class,'updatePlace']);
 Route::delete('/deleteplace/{id}',[PlaceController::class,'deletePlace']);
-
+// route routes
 Route::get('/routes',[RouteController::class,'getRoutes']);
 Route::post('/route',[RouteController::class,'insertRoute']);
 Route::put('/updateRoute/{id}',[RouteController::class,'updateRoute']);
 Route::delete('/deleteRoute/{id}',[RouteController::class,'deleteRoute']);
-
+// region routes
 Route::post('/region',[RegionController::class,'insertRegion']);
 Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
-
-Route::get('/getRoute/{source}/{Destination}', [RouteController::class,'getBestPass']);
+// find best path route 
+Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'findBestPath']);
+// return graph route 
+Route::get('/rgraph',[RouteController::class,'returnGraph']);
