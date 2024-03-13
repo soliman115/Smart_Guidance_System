@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ApiControllers\AuthController;
+use App\Http\Controllers\ApiControllers\BuildingController;
+use App\Http\Controllers\ApiControllers\EmailController;
+use App\Http\Controllers\ApiControllers\EmployeeController;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ApiControllers\EmployeeController;
 use App\Http\Controllers\ApiControllers\ServiceController;
-use App\Http\Controllers\ApiControllers\BuildingController;
+use App\Http\Controllers\ApiControllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,9 +53,7 @@ Route::post('/login',[AuthController::class,'login']);
 Route::post('/check-code',[AuthController::class,'check_code']);
 Route::post('/new-password',[AuthController::class,'new_password']);
 
-Route::get('send-mail', function () {
-    
-});
+Route::post('forget-password', [EmailController::class,'send']);
 
 
 Route::group(['prefix'=>'/profile'],function (){

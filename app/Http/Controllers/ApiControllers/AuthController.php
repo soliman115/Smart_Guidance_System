@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ApiControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -60,9 +60,9 @@ class AuthController extends Controller
             'title' => 'Mail from Smart guidance system',
             'body' => 'This is your code to set up new password '.$user->verfication
         ];
-    
+
         \Mail::to($user->email)->send(new \App\Mail\MyMail($details));
-    
-        
+
+
     }
 }
