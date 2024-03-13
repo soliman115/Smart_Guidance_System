@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ApiControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateInfoFormRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
