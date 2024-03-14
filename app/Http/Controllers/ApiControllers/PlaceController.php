@@ -12,36 +12,28 @@ use Illuminate\Support\Facades\Validator;
 class PlaceController extends Controller
 
 {
-        //insert places
+        // insert place 
         public function insertPlace(Request $request)
         {
             $validator = Validator::make($request->all(), [
                 'id' => 'required|unique:places',
                 'name' => 'required|unique:places',
-                'region' => 'required',
+                'region_id' => 'required|exists:regions,id', // Check if region_id exists in Region model
                 'x_coordinate' => 'required',
                 'y_coordinate' => 'required',
                 'building_id' => 'required'
             ]);
-
+        
             if ($validator->fails()) {
                 return "Error: " . $validator->errors();
             }
-                // $place = new Place;
-                // $place->id = $request->id;
-                // $place->name = $request->name;
-                // $place->region = $request->region;
-                // $place->guide_word = $request->guide_word;
-                // $place->x_coordinate = $request->x_coordinate;
-                // $place->y_coordinate = $request->y_coordinate;
-                // $place->save();
-
-                Place::create($request->all());
-            
-            // place::create($validator->validated());
-            $id= $request->id;
+        
+            Place::create($request->all());
+        
+            $id = $request->id;
             return "Record with id $id inserted successfully!";
-        }//end insert
+        }//end insert place 
+        
 
         //retrive places
         public function getPlaces(){
@@ -58,34 +50,27 @@ class PlaceController extends Controller
         public function updatePlace(Request $request, $id)
         {
             $validator = Validator::make($request->all(), [
+
                 'id' => 'required|unique:places,id,'.$id,
                 'name' => 'required|unique:places,name,'.$id,
-                'region_id' => 'required'
+                'region_id' => 'required',
+                'x_coordinate' => 'required',
+                'y_coordinate' => 'required',
+                'building_id' => 'required'
             ]);
 
             if ($validator->fails()) {
-                return "Error: " . $validator->errors()->first();
+                return "Error: " . $validator->errors();
             }
 
             $place = Place::find($id);
             if (!$place) {
                 return "Error: Record with id $id not found!";
             }
-            
-            //$place->update($request->all());
-            // $place->id = $request->id;
-            // $place->name = $request->name;
-            // $place->region = $request->region;
-            // $place->guide_word = $request->guide_word;
-            // $place->save();
-            //$place= place::create($validator->validated());
+
             $place->update($request->all());
             return "Record with id $id updated successfully!";
-
-
         }//end update
-
-
 
         //delete places
         public function deletePlace($id)

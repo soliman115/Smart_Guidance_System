@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     use HasFactory;
-    protected $fillable=['id','name','region','guide_word','x_coordinate','y_coordinate','building_id'];
-    
+
+    protected $fillable = ['id','name','region','guide_word','x_coordinate','y_coordinate','building_id'];
+
     protected $primaryKey = 'id'; // or null
     public $incrementing = false;
 
@@ -22,4 +23,19 @@ class Place extends Model
         return $this->hasMany(Visit::class);
     }
 
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
+    }
+
+    public function Service()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    ///belong
+    public function employee()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

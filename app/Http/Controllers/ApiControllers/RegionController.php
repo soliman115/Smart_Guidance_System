@@ -65,11 +65,7 @@ public function updateRegion(Request $request, $id)
     //$Region= Region::create($validator->validated());
 
     return "Record with id $id updated successfully!";
-
-
 }//end update
-
-
 
 //delete Regions
 public function deleteRegion($id)
@@ -84,17 +80,9 @@ public function deleteRegion($id)
     return "Record with id $id deleted successfully!";
 }//end delete
 
-
-
-
-
-    public function test_fun(){
-        // $region = Region::find('6');
-        // $Region = $region->places;
-        // return $Region; 
-
-        $place= Place::find('8');
-        $destinationRegion = $place->Region;
-        return [$destinationRegion];
+public function test_fun(){
+    $place= Place::find('8');
+    $destinationRegion = $place->Region;
+    return [$destinationRegion];
     } 
 }
