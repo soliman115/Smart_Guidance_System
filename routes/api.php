@@ -47,24 +47,26 @@ Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'
 // return graph route
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
-//get buildings
+//CURD buildings
 Route::get('buildings', [BuildingController::class, 'index']);
 Route::get('/buildings/{id}', [BuildingController::class, 'show']);
 Route::post('buildings', [BuildingController::class, 'store']);
 Route::post('buildings/{id}', [BuildingController::class, 'update']);
 Route::post('/building/{id}', [BuildingController::class, 'destroy']);
-//get services
+//CURD services
 Route::get('services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('services', [ServiceController::class, 'store']);
 Route::post('services/{id}', [ServiceController::class, 'update']);
 Route::post('/service/{id}', [ServiceController::class, 'destroy']);
-//get employees
+//CURD employees
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
+
+#GET service by place
 
 
 Route::post('/register',[AuthController::class,'register']);
