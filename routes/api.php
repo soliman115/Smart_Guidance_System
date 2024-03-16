@@ -59,8 +59,10 @@ Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('services', [ServiceController::class, 'store']);
 Route::post('services/{id}', [ServiceController::class, 'update']);
 Route::post('/service/{id}', [ServiceController::class, 'destroy']);
+
 //get service by place
 Route::post('/servicestoplace/{id}', [ServiceController::class, 'getservicebyplace']);
+
 //CURD employees
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
