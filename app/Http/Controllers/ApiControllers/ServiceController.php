@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ServiceResource;
+use App\Models\Building;
 use App\Models\Employee;
 use App\Models\Place;
 use App\Models\Service;
@@ -137,5 +138,13 @@ class ServiceController extends Controller
         //return building to the place
         $place = Place::find($id);
         return $place->building;
+    }
+
+    public function getplacebybuilding($id)
+    {
+
+        //return building to the place
+        $building = Building::find($id);
+        return $building->places;
     }
 }

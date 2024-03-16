@@ -8,13 +8,6 @@ use App\Http\Controllers\ApiControllers\EmployeeController;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
-
-use App\Http\Controllers\ApiControllers\EmployeeController;
-use App\Http\Controllers\ApiControllers\ServiceController;
-use App\Http\Controllers\ApiControllers\BuildingController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\ApiControllers\ServiceController;
 use App\Http\Controllers\ApiControllers\UserController;
 use App\Http\Controllers\ApiControllers\UserDashboardController;
@@ -60,21 +53,6 @@ Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
 
 //CURD buildings
-
-
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
-Route::post('/check-code',[AuthController::class,'check_code']);
-Route::post('/new-password',[AuthController::class,'new_password']);
-
-Route::post('forget-password', [EmailController::class,'send']);
-
-
-Route::group(['prefix'=>'/profile'],function (){
-    Route::post('/update',[UserController::class,'update_info']);
-});
-
-
 Route::get('buildings', [BuildingController::class, 'index']);
 Route::get('/buildings/{id}', [BuildingController::class, 'show']);
 Route::post('buildings', [BuildingController::class, 'store']);
@@ -108,6 +86,9 @@ Route::get('/placetoservice/{id}', [ServiceController::class, 'getplacebyservice
 //get building by place
 Route::get('/buildingtoplace/{id}', [ServiceController::class, 'getbuildingbyplace']);
 
+//get places by building
+Route::get('/placetobuilding/{id}', [ServiceController::class, 'getplacebybuilding']);
+
 //CURD employees
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
@@ -115,13 +96,7 @@ Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
 
-//Dashboard
-Route::get('/admin-dashboard', [AdminDashboardController::class, 'getAdminStatistics']);
-Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
-//storeVisit
-Route::post('/store-visit',[VisitsController::class,'storeVisit']);
-
-
+//login & register
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/check-code',[AuthController::class,'check_code']);
@@ -135,3 +110,11 @@ Route::get('send-mail', function () {
 Route::group(['prefix'=>'/profile'],function (){
     Route::post('/update',[UserController::class,'update_info']);
 });
+
+//Dashboard
+Route::get('/admin-dashboard', [AdminDashboardController::class, 'getAdminStatistics']);
+Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
+//storeVisit
+Route::post('/store-visit',[VisitsController::class,'storeVisit']);
+
+
