@@ -92,64 +92,52 @@ class GraphUtility
 
 
 //constructGraphFromDatabase
-public static function constructGraphFromDatabase()
-{
-    // Fetch all routes from the database
-    $routes = Route::all();
+    public static function constructGraphFromDatabase()
+    {
+        // Fetch all routes from the database
+        $routes = Route::all();
 
-    // Initialize an empty graph
-    $graph = [];
+        // Initialize an empty graph
+        $graph = [];
 
-    // Populate the graph with routes data
-    foreach ($routes as $route) {
-        // Add source node if not exists
-        if (!isset($graph[$route->source])) {
-            $graph[$route->source] = [];
+        // Populate the graph with routes data
+        foreach ($routes as $route) {
+            // Add source node if not exists
+            if (!isset($graph[$route->source])) {
+                $graph[$route->source] = [];
+            }
+
+            // Add destination node if not exists
+            if (!isset($graph[$route->destination])) {
+                $graph[$route->destination] = [];
+            }
+
+            // Add next step and distance to the source node
+            $graph[$route->source][$route->next_step] = $route->distance;
+
+            // If the next step is the destination, but it's not the same as the source,
+            // don't set the distance to 100
+            if ($route->next_step === $route->destination && $route->next_step !== $route->source) {
+                // Distance to the destination should not necessarily be 100
+                // Instead, let's set it to the actual distance specified in the route
+                $graph[$route->source][$route->destination] = $route->distance; 
+            }
         }
 
-        // Add destination node if not exists
-        if (!isset($graph[$route->destination])) {
-            $graph[$route->destination] = [];
-        }
-
-        // Add next step and distance to the source node
-        $graph[$route->source][$route->next_step] = $route->distance;
-
-        // If the next step is the destination, but it's not the same as the source,
-        // don't set the distance to 100
-        if ($route->next_step === $route->destination && $route->next_step !== $route->source) {
-            // Distance to the destination should not necessarily be 100
-            // Instead, let's set it to the actual distance specified in the route
-            $graph[$route->source][$route->destination] = $route->distance; 
-        }
-    }
-
-    // Store the constructed graph for later use
-    self::$graph = $graph;
-    return $graph;
-}//end constructGraphFromDatabase
-
-
-
-
-
-
-
-
-
-
-
-
+        // Store the constructed graph for later use
+        self::$graph = $graph;
+        return $graph;
+    }//end constructGraphFromDatabase
 
     //findShortestPath
     public static function findShortestPath($source, $destination)
-    {
+    {   $final_destination=$destination;
         $place= Place::find($destination);
-            $destination_id = $place->Region;//destination is the destination region
-            $source_id=Region::find($source);//source is the source region
+        $destination_id = $place->Region;//destination is the destination region
+        $source_id=Region::find($source);//source is the source region
             
-            $destination = $destination_id->name;
-            $source= $source_id->name;
+        $destination = $destination_id->name;
+        $source= $source_id->name;
         // Construct the graph if not already constructed
         self::constructGraphFromDatabase();
 
@@ -221,6 +209,7 @@ public static function constructGraphFromDatabase()
 
         // Reverse the path to start from the source
         $path = array_reverse($path);
+        array_push($path,$final_destination );
 
         // Return the shortest path and its distance
         return array('path' => $path, 'distance' => $distances[$destination]);
