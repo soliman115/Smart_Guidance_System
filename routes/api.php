@@ -8,13 +8,6 @@ use App\Http\Controllers\ApiControllers\EmployeeController;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
-
-use App\Http\Controllers\ApiControllers\EmployeeController;
-use App\Http\Controllers\ApiControllers\ServiceController;
-use App\Http\Controllers\ApiControllers\BuildingController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\ApiControllers\ServiceController;
 use App\Http\Controllers\ApiControllers\UserController;
 use App\Http\Controllers\ApiControllers\UserDashboardController;
@@ -59,9 +52,6 @@ Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
 
-//CURD buildings
-
-
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/check-code',[AuthController::class,'check_code']);
@@ -74,41 +64,18 @@ Route::group(['prefix'=>'/profile'],function (){
     Route::post('/update',[UserController::class,'update_info']);
 });
 
-
 Route::get('buildings', [BuildingController::class, 'index']);
 Route::get('/buildings/{id}', [BuildingController::class, 'show']);
 Route::post('buildings', [BuildingController::class, 'store']);
 Route::post('buildings/{id}', [BuildingController::class, 'update']);
 Route::post('/building/{id}', [BuildingController::class, 'destroy']);
-//CURD services
+
 Route::get('services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('services', [ServiceController::class, 'store']);
 Route::post('services/{id}', [ServiceController::class, 'update']);
 Route::post('/service/{id}', [ServiceController::class, 'destroy']);
 
-//get service by place
-Route::get('/servicestoplace/{id}', [ServiceController::class, 'getservicebyplace']);
-
-//get employee by place
-Route::get('/employeetoplace/{id}', [ServiceController::class, 'getemployeebyplace']);
-
-//get service by employee
-Route::get('/servicestoemployee/{id}', [ServiceController::class, 'getservicebyemployee']);
-
-//get place by employee
-Route::get('/placetoemployee/{id}', [ServiceController::class, 'getplacebyemployee']);
-
-//get employee by service
-Route::get('/employeetoservice/{id}', [ServiceController::class, 'getemployeebyservice']);
-
-//get place by service
-Route::get('/placetoservice/{id}', [ServiceController::class, 'getplacebyservice']);
-
-//get building by place
-Route::get('/buildingtoplace/{id}', [ServiceController::class, 'getbuildingbyplace']);
-
-//CURD employees
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 Route::post('employees', [EmployeeController::class, 'store']);
@@ -122,16 +89,4 @@ Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistic
 Route::post('/store-visit',[VisitsController::class,'storeVisit']);
 
 
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
-Route::post('/check-code',[AuthController::class,'check_code']);
-Route::post('/new-password',[AuthController::class,'new_password']);
 
-Route::get('send-mail', function () {
-
-});
-
-
-Route::group(['prefix'=>'/profile'],function (){
-    Route::post('/update',[UserController::class,'update_info']);
-});
