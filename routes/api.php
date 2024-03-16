@@ -96,25 +96,22 @@ Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
 
-//login & register
+// login & register
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/check-code',[AuthController::class,'check_code']);
 Route::post('/new-password',[AuthController::class,'new_password']);
 
-Route::get('send-mail', function () {
-
-});
+Route::post('forget-password', [EmailController::class,'send']);
 
 
 Route::group(['prefix'=>'/profile'],function (){
     Route::post('/update',[UserController::class,'update_info']);
 });
 
+
 //Dashboard
 Route::get('/admin-dashboard', [AdminDashboardController::class, 'getAdminStatistics']);
 Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
 //storeVisit
 Route::post('/store-visit',[VisitsController::class,'storeVisit']);
-
-
