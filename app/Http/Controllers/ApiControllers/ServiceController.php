@@ -14,15 +14,15 @@ class ServiceController extends Controller
     use ApiResponseTrait;
     public function index()
     {
-        // $Service = Service::get();
-        // return $this->apiResponse($Service, "ok", 200);
+        $Service = Service::get();
+        return $this->apiResponse($Service, "ok", 200);
 
       //return employees to the service
         // $Service = Service::find(1);
         // return $Service->employees;
      //return service to the place
-        $place = Place::find(1);
-        return $place->services;
+        // $place = Place::find(1);
+        // return $place->services;
 
     }
 
@@ -85,4 +85,11 @@ class ServiceController extends Controller
             return $this->apiResponse(null, 'The Service deleted', 200);
         }
     }
+    public function getservicebyplace($id){
+
+          //return service to the place
+        $place = Place::find($id);
+        return $place->services;
+    }
+
 }

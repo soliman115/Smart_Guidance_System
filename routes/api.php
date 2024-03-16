@@ -59,14 +59,14 @@ Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('services', [ServiceController::class, 'store']);
 Route::post('services/{id}', [ServiceController::class, 'update']);
 Route::post('/service/{id}', [ServiceController::class, 'destroy']);
+//get service by place
+Route::post('/servicestoplace/{id}', [ServiceController::class, 'getservicebyplace']);
 //CURD employees
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
-
-#GET service by place
 
 
 Route::post('/register',[AuthController::class,'register']);
