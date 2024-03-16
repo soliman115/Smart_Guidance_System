@@ -13,7 +13,7 @@ class CreateVisitsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('place_id');
-            $table->foreign('place_id')->references('id')->on('Places');
+            $table->foreign('place_id')->references('id')->on('places');
             $table->dateTime('visited_at');
             $table->timestamps();
         });

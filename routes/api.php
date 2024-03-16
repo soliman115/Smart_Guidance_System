@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiControllers\AdminDashboardController;
 use App\Http\Controllers\ApiControllers\AuthController;
 use App\Http\Controllers\ApiControllers\BuildingController;
 use App\Http\Controllers\ApiControllers\EmailController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
 use App\Http\Controllers\ApiControllers\ServiceController;
 use App\Http\Controllers\ApiControllers\UserController;
+use App\Http\Controllers\ApiControllers\UserDashboardController;
+use App\Http\Controllers\ApiControllers\VisitsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,9 +45,9 @@ Route::post('/region',[RegionController::class,'insertRegion']);
 Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
-// find best path route 
+// find best path route
 Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'findBestPath']);
-// return graph route 
+// return graph route
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
 
@@ -77,6 +80,12 @@ Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
+
+//Dashboard
+Route::get('/admin-dashboard', [AdminDashboardController::class, 'getAdminStatistics']);
+Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
+//storeVisit
+Route::post('/store-visit',[VisitsController::class,'storeVisit']);
 
 
 
