@@ -18,6 +18,7 @@ class Place extends Model
     {
         return $this->belongsTo(Region::class);
     }
+
     public function visits()
     {
         return $this->hasMany(Visit::class);
@@ -28,13 +29,12 @@ class Place extends Model
         return $this->belongsTo(Building::class);
     }
 
-    public function Service()
+    public function services()
     {
         return $this->hasMany(Service::class);
     }
 
-    ///belong
-    public function employee()
+    public function employees()
     {
         return $this->hasMany(Employee::class);
     }

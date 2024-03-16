@@ -61,7 +61,25 @@ Route::post('services/{id}', [ServiceController::class, 'update']);
 Route::post('/service/{id}', [ServiceController::class, 'destroy']);
 
 //get service by place
-Route::post('/servicestoplace/{id}', [ServiceController::class, 'getservicebyplace']);
+Route::get('/servicestoplace/{id}', [ServiceController::class, 'getservicebyplace']);
+
+//get employee by place
+Route::get('/employeetoplace/{id}', [ServiceController::class, 'getemployeebyplace']);
+
+//get service by employee
+Route::get('/servicestoemployee/{id}', [ServiceController::class, 'getservicebyemployee']);
+
+//get place by employee
+Route::get('/placetoemployee/{id}', [ServiceController::class, 'getplacebyemployee']);
+
+//get employee by service
+Route::get('/employeetoservice/{id}', [ServiceController::class, 'getemployeebyservice']);
+
+//get place by service
+Route::get('/placetoservice/{id}', [ServiceController::class, 'getplacebyservice']);
+
+//get building by place
+Route::get('/buildingtoplace/{id}', [ServiceController::class, 'getbuildingbyplace']);
 
 //CURD employees
 Route::get('employees', [EmployeeController::class, 'index']);

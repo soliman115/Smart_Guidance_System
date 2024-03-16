@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ServiceResource;
+use App\Models\Employee;
 use App\Models\Place;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -17,10 +18,10 @@ class ServiceController extends Controller
         $Service = Service::get();
         return $this->apiResponse($Service, "ok", 200);
 
-      //return employees to the service
+        //return employees to the service
         // $Service = Service::find(1);
         // return $Service->employees;
-     //return service to the place
+        //  return service to the place
         // $place = Place::find(1);
         // return $place->services;
 
@@ -85,11 +86,56 @@ class ServiceController extends Controller
             return $this->apiResponse(null, 'The Service deleted', 200);
         }
     }
-    public function getservicebyplace($id){
+    public function getservicebyplace($id)
+    {
 
-          //return service to the place
+        //return service to the place
         $place = Place::find($id);
         return $place->services;
     }
+    public function getemployeebyplace($id)
+    {
+       //return employee to the place
+        $place = Place::find($id);
+        return $place->employees;
 
+    }
+
+    public function getservicebyemployee($id)
+    {
+
+        // return service to the employee
+        $employee = Employee::find($id);
+        return $employee->services;
+    }
+
+    public function getplacebyemployee($id)
+    {
+
+        //return place to the employee
+        $employee = Employee::find($id);
+        return $employee->place;
+    }
+
+    public function getemployeebyservice($id)
+    {
+
+         //return employees to the service
+        $Service = Service::find($id);
+        return $Service->employees;
+    }
+    public function getplacebyservice($id)
+    {
+
+         //return place to the service
+        $Service = Service::find($id);
+        return $Service->Place;
+    }
+    public function getbuildingbyplace($id)
+    {
+
+        //return building to the place
+        $place = Place::find($id);
+        return $place->building;
+    }
 }
