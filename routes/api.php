@@ -45,9 +45,9 @@ Route::post('/region',[RegionController::class,'insertRegion']);
 Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
-// find best path route
+// find best path route 
 Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'findBestPath']);
-// return graph route
+// return graph route 
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
 
