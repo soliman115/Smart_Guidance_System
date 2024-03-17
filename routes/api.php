@@ -46,24 +46,39 @@ Route::post('/region',[RegionController::class,'insertRegion']);
 Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
-// find best path route
+// find best path route 
 Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'findBestPath']);
-// return graph route
+// return graph route 
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
 
+
 //CURD buildings
+
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/login',[AuthController::class,'login']);
+Route::post('/check-code',[AuthController::class,'check_code']);
+Route::post('/new-password',[AuthController::class,'new_password']);
+
+Route::post('forget-password', [EmailController::class,'send']);
+
+
+Route::group(['prefix'=>'/profile'],function (){
+    Route::post('/update',[UserController::class,'update_info']);
+});
+ 
 Route::get('buildings', [BuildingController::class, 'index']);
 Route::get('/buildings/{id}', [BuildingController::class, 'show']);
 Route::post('buildings', [BuildingController::class, 'store']);
 Route::post('buildings/{id}', [BuildingController::class, 'update']);
 Route::post('/building/{id}', [BuildingController::class, 'destroy']);
-//CURD services
+
 Route::get('services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('services', [ServiceController::class, 'store']);
 Route::post('services/{id}', [ServiceController::class, 'update']);
 Route::post('/service/{id}', [ServiceController::class, 'destroy']);
+
 
 //get service by place
 Route::get('/servicestoplace/{id}', [ServiceController::class, 'getservicebyplace']);
@@ -90,11 +105,13 @@ Route::get('/buildingtoplace/{id}', [ServiceController::class, 'getbuildingbypla
 Route::get('/placetobuilding/{id}', [ServiceController::class, 'getplacebybuilding']);
 
 //CURD employees
+
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
+
 
 //login & register
 Route::post('/register',[AuthController::class,'register']);
@@ -118,4 +135,5 @@ Route::get('/admin-dashboard', [AdminDashboardController::class, 'getAdminStatis
 Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
 //storeVisit
 Route::post('/store-visit',[VisitsController::class,'storeVisit']);
+
 
