@@ -52,6 +52,9 @@ Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
 
+
+//CURD buildings
+
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/check-code',[AuthController::class,'check_code']);
@@ -63,7 +66,7 @@ Route::post('forget-password', [EmailController::class,'send']);
 Route::group(['prefix'=>'/profile'],function (){
     Route::post('/update',[UserController::class,'update_info']);
 });
-
+ 
 Route::get('buildings', [BuildingController::class, 'index']);
 Route::get('/buildings/{id}', [BuildingController::class, 'show']);
 Route::post('buildings', [BuildingController::class, 'store']);
@@ -76,17 +79,61 @@ Route::post('services', [ServiceController::class, 'store']);
 Route::post('services/{id}', [ServiceController::class, 'update']);
 Route::post('/service/{id}', [ServiceController::class, 'destroy']);
 
+
+//get service by place
+Route::get('/servicestoplace/{id}', [ServiceController::class, 'getservicebyplace']);
+
+//get employee by place
+Route::get('/employeetoplace/{id}', [ServiceController::class, 'getemployeebyplace']);
+
+//get service by employee
+Route::get('/servicestoemployee/{id}', [ServiceController::class, 'getservicebyemployee']);
+
+//get place by employee
+Route::get('/placetoemployee/{id}', [ServiceController::class, 'getplacebyemployee']);
+
+//get employee by service
+Route::get('/employeetoservice/{id}', [ServiceController::class, 'getemployeebyservice']);
+
+//get place by service
+Route::get('/placetoservice/{id}', [ServiceController::class, 'getplacebyservice']);
+
+//get building by place
+Route::get('/buildingtoplace/{id}', [ServiceController::class, 'getbuildingbyplace']);
+
+//get places by buding
+Route::get('/placetobuilding/{id}', [ServiceController::class, 'getplacebybuilding']);
+
+//CURD employees
+
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
 
+
+//login & register
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/login',[AuthController::class,'login']);
+Route::post('/check-code',[AuthController::class,'check_code']);
+Route::post('/new-password',[AuthController::class,'new_password']);
+
+Route::post('forget-password', [EmailController::class,'send']);
+
+Route::get('send-mail', function () {
+
+});
+
+
+Route::group(['prefix'=>'/profile'],function (){
+    Route::post('/update',[UserController::class,'update_info']);
+});
+
 //Dashboard
 Route::get('/admin-dashboard', [AdminDashboardController::class, 'getAdminStatistics']);
 Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
 //storeVisit
 Route::post('/store-visit',[VisitsController::class,'storeVisit']);
-
 
 
