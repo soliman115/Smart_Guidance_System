@@ -46,9 +46,9 @@ Route::post('/region',[RegionController::class,'insertRegion']);
 Route::get('/region',[RegionController::class,'getRegions']);
 Route::put('/updateRegion/{id}',[RegionController::class,'updateRegion']);
 Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
-// find best path route 
+// find best path route
 Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'findBestPath']);
-// return graph route 
+// return graph route
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
 
 
@@ -66,18 +66,22 @@ Route::post('forget-password', [EmailController::class,'send']);
 Route::group(['prefix'=>'/profile'],function (){
     Route::post('/update',[UserController::class,'update_info']);
 });
- 
+#get all building
 Route::get('buildings', [BuildingController::class, 'index']);
-Route::get('/buildings/{id}', [BuildingController::class, 'show']);
-Route::post('buildings', [BuildingController::class, 'store']);
-Route::post('buildings/{id}', [BuildingController::class, 'update']);
-Route::post('/building/{id}', [BuildingController::class, 'destroy']);
+#get one building by id
+Route::get('/building/{id}', [BuildingController::class, 'show']);
+#insert building
+Route::post('building', [BuildingController::class, 'store']);
+#update building
+Route::post('updatebuilding/{id}', [BuildingController::class, 'update']);
+#delete building
+Route::post('/deletebuilding/{id}', [BuildingController::class, 'destroy']);
 
 Route::get('services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
-Route::post('services', [ServiceController::class, 'store']);
-Route::post('services/{id}', [ServiceController::class, 'update']);
-Route::post('/service/{id}', [ServiceController::class, 'destroy']);
+Route::post('service', [ServiceController::class, 'store']);
+Route::post('updateservice/{id}', [ServiceController::class, 'update']);
+Route::post('/updateservice/{id}', [ServiceController::class, 'destroy']);
 
 
 //get service by place
@@ -107,10 +111,10 @@ Route::get('/placetobuilding/{id}', [ServiceController::class, 'getplacebybuildi
 //CURD employees
 
 Route::get('employees', [EmployeeController::class, 'index']);
-Route::get('/employees/{id}', [EmployeeController::class, 'show']);
-Route::post('employees', [EmployeeController::class, 'store']);
-Route::post('employees/{id}', [EmployeeController::class, 'update']);
-Route::post('/employee/{id}', [EmployeeController::class, 'destroy']);
+Route::get('/employee/{id}', [EmployeeController::class, 'show']);
+Route::post('employee', [EmployeeController::class, 'store']);
+Route::post('updateemployee/{id}', [EmployeeController::class, 'update']);
+Route::post('/deleteemployee/{id}', [EmployeeController::class, 'destroy']);
 
 
 //login & register

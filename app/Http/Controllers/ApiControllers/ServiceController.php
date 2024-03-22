@@ -18,14 +18,6 @@ class ServiceController extends Controller
     {
         $Service = Service::get();
         return $this->apiResponse($Service, "ok", 200);
-
-        //return employees to the service
-        // $Service = Service::find(1);
-        // return $Service->employees;
-        //  return service to the place
-        // $place = Place::find(1);
-        // return $place->services;
-
     }
 
     public function show($id)
@@ -89,62 +81,121 @@ class ServiceController extends Controller
     }
     public function getservicebyplace($id)
     {
-
-        //return service to the place
+        // Find the place by its ID
         $place = Place::find($id);
-        return $place->services;
+
+        // Check if the place exists
+        if ($place) {
+            // If the place exists, return its services
+            return $this->apiResponse($place->services, "Services found for place", 200);
+        } else {
+            // If the place doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid place ID", 404);
+        }
     }
+
     public function getemployeebyplace($id)
     {
-       //return employee to the place
+        // Find the place by its ID
         $place = Place::find($id);
-        return $place->employees;
 
+        // Check if the place exists
+        if ($place) {
+            // If the place exists, return its employees
+            return $this->apiResponse($place->employees, "Employees found for place", 200);
+        } else {
+            // If the place doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid place ID", 404);
+        }
     }
 
     public function getservicebyemployee($id)
     {
-
-        // return service to the employee
+        // Find the employee by their ID
         $employee = Employee::find($id);
-        return $employee->services;
+
+        // Check if the employee exists
+        if ($employee) {
+            // If the employee exists, return their services
+            return $this->apiResponse($employee->services, "Services found for employee", 200);
+        } else {
+            // If the employee doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid employee ID", 404);
+        }
     }
 
     public function getplacebyemployee($id)
     {
-
-        //return place to the employee
+        // Find the employee by their ID
         $employee = Employee::find($id);
-        return $employee->place;
+
+        // Check if the employee exists
+        if ($employee) {
+            // If the employee exists, return their place
+            return $this->apiResponse($employee->place, "Place found for employee", 200);
+        } else {
+            // If the employee doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid employee ID", 404);
+        }
     }
 
     public function getemployeebyservice($id)
     {
+        // Find the service by its ID
+        $service = Service::find($id);
 
-         //return employees to the service
-        $Service = Service::find($id);
-        return $Service->employees;
+        // Check if the service exists
+        if ($service) {
+            // If the service exists, return its employees
+            return $this->apiResponse($service->employees, "Employees found for service", 200);
+        } else {
+            // If the service doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid service ID", 404);
+        }
     }
+
     public function getplacebyservice($id)
     {
+        // Find the service by its ID
+        $service = Service::find($id);
 
-         //return place to the service
-        $Service = Service::find($id);
-        return $Service->Place;
+        // Check if the service exists
+        if ($service) {
+            // If the service exists, return its place
+            return $this->apiResponse($service->place, "Place found for service", 200);
+        } else {
+            // If the service doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid service ID", 404);
+        }
     }
+
     public function getbuildingbyplace($id)
     {
-
-        //return building to the place
+        // Find the place by its ID
         $place = Place::find($id);
-        return $place->building;
+
+        // Check if the place exists
+        if ($place) {
+            // If the place exists, return its building
+            return $this->apiResponse($place->building, "Building found for place", 200);
+        } else {
+            // If the place doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid place ID", 404);
+        }
     }
 
     public function getplacebybuilding($id)
     {
-
-        //return building to the place
+        // Find the building by its ID
         $building = Building::find($id);
-        return $building->places;
+
+        // Check if the building exists
+        if ($building) {
+            // If the building exists, return its places
+            return $this->apiResponse($building->places, "Places found for building", 200);
+        } else {
+            // If the building doesn't exist, return a message indicating that the ID is invalid
+            return $this->apiResponse(null, "Invalid building ID", 404);
+        }
     }
 }
