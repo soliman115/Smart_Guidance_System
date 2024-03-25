@@ -77,6 +77,8 @@ Route::post('updatebuilding/{id}', [BuildingController::class, 'update']);
 #delete building
 Route::post('/deletebuilding/{id}', [BuildingController::class, 'destroy']);
 
+
+#CURD services
 Route::get('services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('service', [ServiceController::class, 'store']);

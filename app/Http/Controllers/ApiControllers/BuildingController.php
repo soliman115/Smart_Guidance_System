@@ -13,11 +13,22 @@ class BuildingController extends Controller
 {
     use ApiResponseTrait;
 
-    public function index()
+    public function index(Request $request)
     {
-        $buildings = Building::get();
+        $pageSize = $request->page_size;
+        $buildings = Building::paginate($pageSize);
         return $this->apiResponse($buildings, "ok", 200);
+
+        // $buildings= BuildingResource::collection(Building::paginate(10));
+        //     $array = [
+        //         'buildings'=>$buildings,
+        //         'msg'=>"good",
+        //         'status'=>200
+        //     ];
+        //     return response($array);
+
     }
+
 
     public function show($id)
     {
