@@ -14,10 +14,19 @@ use Illuminate\Support\Facades\Validator;
 class ServiceController extends Controller
 {
     use ApiResponseTrait;
-    public function index()
+    public function index(Request $request)
     {
-        $Service = Service::get();
+        $pageSize = $request->page_size;
+        $Service = Service::paginate($pageSize);
         return $this->apiResponse($Service, "ok", 200);
+
+        // $Service= ServiceResource::collection(Service::paginate(10));
+        // $array = [
+        //     'Service'=>$Service,
+        //     'msg'=>"good",
+        //     'status'=>200
+        // ];
+        // return response($array);
     }
 
     public function show($id)

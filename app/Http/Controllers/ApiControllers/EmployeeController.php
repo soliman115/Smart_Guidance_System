@@ -13,11 +13,18 @@ class EmployeeController extends Controller
 {
     use ApiResponseTrait;
 
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::get();
+        $pageSize = $request->page_size;
+        $employees = Employee::paginate($pageSize);
         return $this->apiResponse($employees, "ok", 200);
-
+        // $employees= EmployeeResource::collection(Employee::paginate($pageSize));
+        // $array = [
+        //     'employees'=>$employees,
+        //     'msg'=>"good",
+        //     'status'=>200
+        // ];
+        // return response($array);
     }
 
     public function show($id)

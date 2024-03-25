@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class PlaceController extends Controller
 
 {
-        // insert place 
+        // insert place
         public function insertPlace(Request $request)
         {
             $validator = Validator::make($request->all(), [
@@ -23,21 +23,22 @@ class PlaceController extends Controller
                 'y_coordinate' => 'required',
                 'building_id' => 'required'
             ]);
-        
+
             if ($validator->fails()) {
                 return "Error: " . $validator->errors();
             }
-        
+
             Place::create($request->all());
-        
+
             $id = $request->id;
             return "Record with id $id inserted successfully!";
-        }//end insert place 
-        
+        }//end insert place
+
 
         //retrive places
-        public function getPlaces(){
-            $places= PlaceResource::collection(place::get());
+        public function getPlaces(Request $request){
+            $pageSize = $request->page_size;
+            $places= PlaceResource::collection(place::paginate($pageSize));
             $array = [
                 'places'=>$places,
                 'msg'=>"good",
