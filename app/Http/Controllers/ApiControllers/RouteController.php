@@ -96,7 +96,10 @@ public function returnGraph(){$graph = GraphUtility::constructGraphFromDatabase(
 public function findBestPath( $source ,$destinationPlace) {
     $source_s = $source;
     $destination_d = $destinationPlace;
-    return GraphUtility::findShortestPath($source_s ,$destination_d);
+
+    $navigationData = GraphUtility::findShortestPath($source_s ,$destination_d);
+    $pathWithInstructions = GraphUtility::generateNavigationInstructions($navigationData);
+    return $pathWithInstructions;
 }//end find best path 
 
 }
