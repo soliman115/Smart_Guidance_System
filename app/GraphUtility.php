@@ -194,49 +194,62 @@ class GraphUtility
         ];
     }// end get the path
 
-
-    // //generateNavigationInstructions
+    
+    
     // public static function generateNavigationInstructions($navigationData) {
     //     $path = $navigationData['path'];
     //     $nodeDistanceDirArray = $navigationData['node_distance_direction_array'];
     //     $totalDistance = $navigationData['total_distance'];
     
-    //     $currentNode = $path[0]; // First node is the current node
     //     $finalDestination = end($path); // Last node is the final destination
-    //     $instructions = "You are currently at node $currentNode. ";
     
-    //     $remainingDistance = $totalDistance;
-    //     foreach ($nodeDistanceDirArray as $nodeData) {
+    //     // Synonyms dictionary
+    //     $synonyms = [
+    //         'start' => ['commence', 'begin', 'embark', 'set out'],
+    //         'destination' => ['endpoint', 'goal', 'target', 'final stop'],
+    //         'walk' => ['continue', 'walk', 'march', 'advance', 'proceed'],
+    //         'you' => ['visitor', 'traveler', 'explorer', 'adventurer']
+    //     ];
+    
+    //     // Map numeric direction codes to cardinal directions
+    //     $directionsMap = ['north', 'northeast', 'east', 'southeast', 'south', 'southwest', 'west', 'northwest'];
+    
+    //     $instructions = "You are $totalDistance meters away from your destination. ";
+    //     $previousWord = ''; // To keep track of the previously used word
+    
+    //     foreach ($nodeDistanceDirArray as $index => $nodeData) {
+    //         $currentNode = $path[$index]; // Get the current node from the path
+    
     //         $distance = $nodeData['distance_to_next'];
-    //         $direction = $nodeData['direction_to_next'];
+    //         $numericDirection = $nodeData['direction_to_next'];
+    
+    //         // Use the numeric direction code to get the cardinal direction
+    //         $direction = isset($directionsMap[$numericDirection]) ? $directionsMap[$numericDirection] : '';
+    
+    //         // Use the previously used word if the current word is the same
+    //         $currentWord = 'walk'; // Default word
+    //         if (isset($synonyms[$currentWord])) {
+    //             $currentWord = $synonyms[$currentWord][array_rand($synonyms[$currentWord])];
+    //         }
     
     //         if ($distance > 0) {
-    //             $instructions .= "Walk $distance meters ";
-    //             if ($direction) {
-    //                 $instructions .= "in the direction of $direction. ";
-    //             } else {
-    //                 $instructions .= "forward. ";
-    //             }
-    //             $remainingDistance -= $distance;
+    //             // Use the current word, direction, and point in the instructions
+    //             $instructions .= "$currentWord $distance meters ";
+    //             $instructions .= "in the direction of $direction towards $currentNode. ";
     //         } else {
-    //             $instructions .= "You have reached your destination, node $finalDestination. ";
+    //             $destinationSynonym = $synonyms['destination'][array_rand($synonyms['destination'])];
+    //             $instructions .= "You have reached your $destinationSynonym, node $finalDestination. ";
     //         }
     //     }
     
-    //     if ($remainingDistance > 0) {
-    //         $instructions = "You are $remainingDistance meters away from your destination. " . $instructions;
-    //     }
+    //     return [           
+    //                     'path' => $path,
+    //                     'instructions'=>$instructions,
+    //                    // 'node_distance_direction_array'=>$nodeDistanceDirArray
+                        
+    //                     ];
+    // }
     
-    //     return [
-    //         'path' => $path,
-    //         'instructions'=>$instructions
-    //     ];
-    // } //end generateNavigationInstructions
-    
-
-
-
-
     public static function generateNavigationInstructions($navigationData) {
         $path = $navigationData['path'];
         $nodeDistanceDirArray = $navigationData['node_distance_direction_array'];
@@ -244,42 +257,53 @@ class GraphUtility
     
         $finalDestination = end($path); // Last node is the final destination
     
-        // Convert numeric directions to cardinal directions
+        // Synonyms dictionary
+        $synonyms = [
+            'start' => ['commence', 'begin', 'embark', 'set out'],
+            'destination' => ['endpoint', 'goal', 'target', 'final stop'],
+            'walk' => ['stroll', 'hike', 'march', 'advance', 'proceed'],
+            'towards' => ['in the direction of', 'to', 'heading to', 'moving toward', 'approaching'],
+            'direction' => ['toward', 'to', 'into', 'onto', 'in the direction of'],
+            'you' => ['visitor', 'traveler', 'explorer', 'adventurer']
+        ];
+    
+        // Map numeric direction codes to cardinal directions
         $directionsMap = ['','north', 'northeast', 'east', 'southeast', 'south', 'southwest', 'west', 'northwest'];
     
         $instructions = "You are $totalDistance meters away from your destination. ";
-        
+        $previousWord = ''; // To keep track of the previously used word
+    
         foreach ($nodeDistanceDirArray as $index => $nodeData) {
             $currentNode = $path[$index]; // Get the current node from the path
     
             $distance = $nodeData['distance_to_next'];
             $numericDirection = $nodeData['direction_to_next'];
+    
+            // Use the numeric direction code to get the cardinal direction
             $direction = isset($directionsMap[$numericDirection]) ? $directionsMap[$numericDirection] : '';
     
-            if ($distance > 0) {
-                if ($index === 0) {
-                    $instructions .= "You will start from node $currentNode. ";
-                }
+            // Use the previously used word if the current word is the same
+            $currentWord = 'direction'; // Default word
+            if (isset($synonyms[$currentWord])) {
+                $currentWord = $synonyms[$currentWord][array_rand($synonyms[$currentWord])];
+            }
     
-                $instructions .= "Walk $distance meters ";
-                if ($direction) {
-                    $instructions .= "in the direction of $direction. ";
-                } else {
-                    $instructions .= "forward. ";
-                }
-            } 
-                
-        }  $instructions .= "You have reached your destination, node $finalDestination. ";
-        return [
-                    'path' => $path,
-                    'instructions'=>$instructions,
-                    'node_distance_direction_array'=>$nodeDistanceDirArray
+            if ($distance > 0) {
+                // Use the current word, direction, and point in the instructions
+                $instructions .= "$currentWord $currentNode ";
+                $instructions .= "proceed $distance meters ";
+                $instructions .= "{$synonyms['direction'][array_rand($synonyms['direction'])]} $direction. ";
+            } else {
+                $destinationSynonym = $synonyms['destination'][array_rand($synonyms['destination'])];
+                $instructions .= "You have reached your $destinationSynonym, node $finalDestination. ";
+            }
+        }
+    
+        return [           
+                'path' => $path,
+                'instructions'=>$instructions,
+                       // 'node_distance_direction_array'=>$nodeDistanceDirArray
+                        
                 ];
-    } //end generateNavigationInstructions
-
-
-
-
-
-
+    }
 }

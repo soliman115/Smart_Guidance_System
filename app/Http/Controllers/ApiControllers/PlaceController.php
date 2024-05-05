@@ -51,26 +51,28 @@ class PlaceController extends Controller
         public function updatePlace(Request $request, $id)
         {
             $validator = Validator::make($request->all(), [
-
-                'id' => 'required|unique:places,id,'.$id,
-                'name' => 'required|unique:places,name,'.$id,
-                'region_id' => 'required',
+                'id' => 'required|unique:places,id,'.$request->id,
+                'name' => 'required|unique:places,name',
+                'region_id' => 'required|exists:regions,id',
                 'x_coordinate' => 'required',
                 'y_coordinate' => 'required',
                 'building_id' => 'required'
             ]);
+            
+            
 
+            
             if ($validator->fails()) {
                 return "Error: " . $validator->errors();
             }
 
-            $place = Place::find($id);
+            $place = Place::find($request->id);
             if (!$place) {
-                return "Error: Record with id $id not found!";
+                return "Error: Record with id $request->id not found!";
             }
 
             $place->update($request->all());
-            return "Record with id $id updated successfully!";
+            return "Record with id $request->id updated successfully!";
         }//end update
 
         //delete places

@@ -9,9 +9,9 @@ class Place extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','name','region','guide_word','x_coordinate','y_coordinate','building_id'];
+    protected $fillable = ['id','name','region_id','guide_word','x_coordinate','y_coordinate','building_id'];
 
-    protected $primaryKey = 'id'; // or null
+    protected $primaryKey = 'id'; 
     public $incrementing = false;
 
     public function region()

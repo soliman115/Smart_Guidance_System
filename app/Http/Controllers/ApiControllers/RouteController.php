@@ -31,8 +31,8 @@ class RouteController extends Controller
     if ($validator->fails()) {
         return "Error: " . $validator->errors();
     }
-    Route::create($request->all());
-    $id = $request->id;
+    $route = Route::create($request->all());
+    $id = $route->id; // Get the ID of the created record
     return "Record with ID $id inserted successfully!";
 }
 // end insert
