@@ -84,7 +84,7 @@ Route::get('services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('service', [ServiceController::class, 'store']);
 Route::post('updateservice/{id}', [ServiceController::class, 'update']);
-Route::post('/deleteservice/{id}', [ServiceController::class, 'destroy']);
+Route::post('/deleteservice/{id}', [ServiceController::class, 'destroy']);  //updated
 
 
 //get service by place
