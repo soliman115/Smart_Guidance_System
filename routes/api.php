@@ -13,6 +13,7 @@ use App\Http\Controllers\ApiControllers\UserController;
 use App\Http\Controllers\ApiControllers\UserDashboardController;
 use App\Http\Controllers\ApiControllers\VisitsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiControllers\MapController;
 
 
 /*
@@ -50,7 +51,9 @@ Route::delete('/deleteRegion/{id}',[RegionController::class,'deleteRegion']);
 Route::get('/findShortestPath/{source}/{Destination}', [RouteController::class,'findBestPath']);
 // return graph route
 Route::get('/rgraph',[RouteController::class,'returnGraph']);
-
+// return the map info
+Route::get('/map', [MapController::class, 'getMaps']);
+//getMaps
 
 
 //CURD buildings

@@ -39,68 +39,73 @@ class RouteController extends Controller
 
 
 //retrive Routes
-public function getRoutes(){
-    $Routes= RouteResource::collection(Route::get());
-    $array = [
-        'Routes'=>$Routes,
-        'msg'=>"good",
-        'status'=>200
-    ];
-    return response($array);
-}//end retrive
+    public function getRoutes(){
+        $Routes= RouteResource::collection(Route::get());
+        $array = [
+            'Routes'=>$Routes,
+            'msg'=>"good",
+            'status'=>200
+        ];
+        return response($array);
+    }//end retrive
 
-//update Routes
-public function updateRoute(Request $request, $id)
-{ 
-    $validator = Validator::make($request->all(), [
-        'source' => 'required|string',
-        'destination' => 'required|string',
-        'next_step' => 'required|string',
-        'direction' => 'required|string',
-        'distance' => 'required|integer'
-    ]);
+    //update Routes
+    public function updateRoute(Request $request, $id)
+    { 
+        $validator = Validator::make($request->all(), [
+            'source' => 'required|string',
+            'destination' => 'required|string',
+            'next_step' => 'required|string',
+            'direction' => 'required|string',
+            'distance' => 'required|integer'
+        ]);
 
-    if ($validator->fails()) {
-        return "Error: " . $validator->errors();
-    }
+        if ($validator->fails()) {
+            return "Error: " . $validator->errors();
+        }
 
-    $Route = Route::find($id);
-    if (!$Route) {
-        return "Error: Record with id $id not found!";
-    }
-    
-    $Route->update($request->all());
-    //$Route= Route::create($validator->validated());
-    return "Record with id $id updated successfully!";
-}//end update
+        $Route = Route::find($id);
+        if (!$Route) {
+            return "Error: Record with id $id not found!";
+        }
+        
+        $Route->update($request->all());
+        //$Route= Route::create($validator->validated());
+        return "Record with id $id updated successfully!";
+    }//end update
 
 
 
-//delete Routes
-public function deleteRoute($id)
-{
-    $Route = Route::find($id);
-    if (!$Route) {
-        return "Error: Record with id $id not found!";
-    }
+    //delete Routes
+    public function deleteRoute($id)
+    {
+        $Route = Route::find($id);
+        if (!$Route) {
+            return "Error: Record with id $id not found!";
+        }
 
-    $Route->delete();
+        $Route->delete();
 
-    return "Record with id $id deleted successfully!";
-}//end delete
+        return "Record with id $id deleted successfully!";
+    }//end delete
 
-//return the graphcreated based on routing table -just For clarification-
-public function returnGraph(){$graph = GraphUtility::constructGraphFromDatabase(); return $graph;}
+    //return the graphcreated based on routing table -just For clarification-
+    public function returnGraph(){$graph = GraphUtility::constructGraphFromDatabase(); return $graph;}
 
-//find best path based on the graph
-public function findBestPath( $source ,$destinationPlace) {
-    $source_s = $source;
-    $destination_d = $destinationPlace;
+    //find best path based on the graph
+    public function findBestPath( $source ,$destinationPlace) {
+        $source_s = $source;
+        $destination_d = $destinationPlace;
 
-    $navigationData = GraphUtility::findShortestPath($source_s ,$destination_d);
-    $pathWithInstructions = GraphUtility::generateNavigationInstructions($navigationData);
-    return $pathWithInstructions;
-}//end find best path 
+        $navigationData = GraphUtility::findShortestPath($source_s ,$destination_d);
+        $pathWithInstructions = GraphUtility::generateNavigationInstructions($navigationData);
+
+        
+
+        return $pathWithInstructions;
+    }//end find best path 
+
+
 
 }
 

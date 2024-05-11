@@ -3,6 +3,17 @@ namespace App;
 use App\Models\Route;
 use App\Models\Region;
 use App\Models\Place;
+
+//text-to-audio generator
+// require '../vendor/autoload.php'; // Load Google Cloud PHP client library
+
+// use Google\Cloud\TextToSpeech\V1\AudioConfig;
+// use Google\Cloud\TextToSpeech\V1\AudioEncoding;
+// use Google\Cloud\TextToSpeech\V1\SynthesisInput;
+// use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
+// use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
+ 
+// use IBM\Watson\TextToSpeech\TextToSpeech;
 class GraphUtility
 {
     private static $graph = null;
@@ -195,61 +206,6 @@ class GraphUtility
     }// end get the path
 
     
-    
-    // public static function generateNavigationInstructions($navigationData) {
-    //     $path = $navigationData['path'];
-    //     $nodeDistanceDirArray = $navigationData['node_distance_direction_array'];
-    //     $totalDistance = $navigationData['total_distance'];
-    
-    //     $finalDestination = end($path); // Last node is the final destination
-    
-    //     // Synonyms dictionary
-    //     $synonyms = [
-    //         'start' => ['commence', 'begin', 'embark', 'set out'],
-    //         'destination' => ['endpoint', 'goal', 'target', 'final stop'],
-    //         'walk' => ['continue', 'walk', 'march', 'advance', 'proceed'],
-    //         'you' => ['visitor', 'traveler', 'explorer', 'adventurer']
-    //     ];
-    
-    //     // Map numeric direction codes to cardinal directions
-    //     $directionsMap = ['north', 'northeast', 'east', 'southeast', 'south', 'southwest', 'west', 'northwest'];
-    
-    //     $instructions = "You are $totalDistance meters away from your destination. ";
-    //     $previousWord = ''; // To keep track of the previously used word
-    
-    //     foreach ($nodeDistanceDirArray as $index => $nodeData) {
-    //         $currentNode = $path[$index]; // Get the current node from the path
-    
-    //         $distance = $nodeData['distance_to_next'];
-    //         $numericDirection = $nodeData['direction_to_next'];
-    
-    //         // Use the numeric direction code to get the cardinal direction
-    //         $direction = isset($directionsMap[$numericDirection]) ? $directionsMap[$numericDirection] : '';
-    
-    //         // Use the previously used word if the current word is the same
-    //         $currentWord = 'walk'; // Default word
-    //         if (isset($synonyms[$currentWord])) {
-    //             $currentWord = $synonyms[$currentWord][array_rand($synonyms[$currentWord])];
-    //         }
-    
-    //         if ($distance > 0) {
-    //             // Use the current word, direction, and point in the instructions
-    //             $instructions .= "$currentWord $distance meters ";
-    //             $instructions .= "in the direction of $direction towards $currentNode. ";
-    //         } else {
-    //             $destinationSynonym = $synonyms['destination'][array_rand($synonyms['destination'])];
-    //             $instructions .= "You have reached your $destinationSynonym, node $finalDestination. ";
-    //         }
-    //     }
-    
-    //     return [           
-    //                     'path' => $path,
-    //                     'instructions'=>$instructions,
-    //                    // 'node_distance_direction_array'=>$nodeDistanceDirArray
-                        
-    //                     ];
-    // }
-    
     public static function generateNavigationInstructions($navigationData) {
         $path = $navigationData['path'];
         $nodeDistanceDirArray = $navigationData['node_distance_direction_array'];
@@ -306,4 +262,6 @@ class GraphUtility
                         
                 ];
     }
+    
+
 }
