@@ -45,8 +45,9 @@ public function getRegions(){
 public function updateRegion(Request $request, $id)
 {
     $validator = Validator::make($request->all(), [
-            'id' => 'required|unique:Regions',
-            'name' => 'required|unique:Regions',
+            'id' => 'required|unique:Regions,id,'.$request->id,
+            //'id' => 'required|exists:Regions',
+            'name' => 'required|unique:places,name',
             'x_coordinate' => 'required',
             'y_coordinate' => 'required'
     ]);
@@ -55,16 +56,16 @@ public function updateRegion(Request $request, $id)
         return "Error: " . $validator->errors();
     }
 
-    $Region = Region::find($id);
+    $Region = Region::find($request->id);
     if (!$Region) {
-        return "Error: Record with id $id not found!";
+        return "Error: Record with id $request->id not found!";
     }
     
     $Region->update($request->all());
    
     //$Region= Region::create($validator->validated());
 
-    return "Record with id $id updated successfully!";
+    return "Record with id $request->id updated successfully!";
 }//end update
 
 //delete Regions

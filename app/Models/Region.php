@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Region extends Model
 {
     use HasFactory;
-    protected $fillable=['id','region_name','x_coordinate','y_coordinate'];
+    protected $fillable=['id','name','x_coordinate','y_coordinate'];
     protected $primaryKey = 'id'; // or null
     public $incrementing = false;
     
