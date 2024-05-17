@@ -69,6 +69,7 @@ Route::post('forget-password', [EmailController::class,'send']);
 Route::group(['prefix'=>'/profile'],function (){
     Route::post('/update',[UserController::class,'update_info']);
 });
+
 #get all building
 Route::get('buildings', [BuildingController::class, 'index']);
 #get one building by id
@@ -86,7 +87,7 @@ Route::get('services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::post('service', [ServiceController::class, 'store']);
 Route::post('updateservice/{id}', [ServiceController::class, 'update']);
-Route::post('/updateservice/{id}', [ServiceController::class, 'destroy']);
+Route::post('/deleteservice/{id}', [ServiceController::class, 'destroy']);  //updated
 
 
 //get service by place
