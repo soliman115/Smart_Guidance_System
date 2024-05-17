@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -22,6 +24,12 @@ class UserDashboardController extends Controller
             // Total number locations
             $locations = Place::count();
 
+            // Total number of employees
+            $totalEmployees = Employee::count();
+
+            // Total number of services
+            $totalServices = Service::count();
+
             // Retrieve the authenticated user and their visit history
             $user = User::with('visits')->find($userId);
             $userVisitHistory = $user->visits ?? [];
@@ -37,11 +45,13 @@ class UserDashboardController extends Controller
             // Prepare statistics data
             $statistics = [
                 'locations' => $locations,
+                'totalEmployees' => $totalEmployees,
+                'totalServices' => $totalServices,
                 'topPopularLocations' => $topPopularLocations,
                 'userVisitHistory' => $userVisitHistory,
                 'allTimeVisits' => $allTimeVisits,
                 'lastMonthVisits' => $lastMonthVisits,
-                'lastSixMonthsVisits' => $lastSixMonthsVisits,
+                'lastSixMonthsVisits' => $lastSixMonthsVisits
             ];
 
             // Return the statistics data as JSON response
