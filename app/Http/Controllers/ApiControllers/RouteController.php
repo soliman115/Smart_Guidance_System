@@ -100,9 +100,14 @@ class RouteController extends Controller
         $navigationData = GraphUtility::findShortestPath($source_s ,$destination_d);
         $pathWithInstructions = GraphUtility::generateNavigationInstructions($navigationData);
 
-        
+
+        // $ttsText = $pathWithInstructions['instructions']; 
+        // $instructionsWithAudio = GraphUtility::generateMP3FromText($ttsText );
+        // $fullInstructions = $pathWithInstructions . $instructionsWithAudio; 
+
 
         return $pathWithInstructions;
+        
     }//end find best path 
 
 

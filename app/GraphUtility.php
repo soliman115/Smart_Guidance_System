@@ -212,7 +212,8 @@ class GraphUtility
         $totalDistance = $navigationData['total_distance'];
     
         $finalDestination = end($path); // Last node is the final destination
-    
+        $finalDestinationName = place::find($finalDestination)->name;
+        $finalDestinationGuideWord = place::find($finalDestination)->guide_word;
         // Synonyms dictionary
         $synonyms = [
             'start' => ['commence', 'begin', 'embark', 'set out'],
@@ -226,7 +227,7 @@ class GraphUtility
         // Map numeric direction codes to cardinal directions
         $directionsMap = ['','north', 'northeast', 'east', 'southeast', 'south', 'southwest', 'west', 'northwest'];
     
-        $instructions = "You are $totalDistance meters away from your destination. ";
+        $instructions = "You are $totalDistance meters away from $finalDestinationName . ";
         $previousWord = ''; // To keep track of the previously used word
     
         foreach ($nodeDistanceDirArray as $index => $nodeData) {
@@ -244,24 +245,94 @@ class GraphUtility
                 $currentWord = $synonyms[$currentWord][array_rand($synonyms[$currentWord])];
             }
     
-            if ($distance > 0) {
+            if ($direction != null) {
                 // Use the current word, direction, and point in the instructions
                 $instructions .= "$currentWord $currentNode ";
                 $instructions .= "proceed $distance meters ";
-                $instructions .= "{$synonyms['direction'][array_rand($synonyms['direction'])]} $direction. ";
+                $instructions .= "{$synonyms['direction'][array_rand($synonyms['direction'])]} $direction . ";
             } else {
                 $destinationSynonym = $synonyms['destination'][array_rand($synonyms['destination'])];
-                $instructions .= "You have reached your $destinationSynonym, node $finalDestination. ";
+                $instructions .= "$finalDestinationGuideWord. ";
+                $instructions .= "You have reached your $destinationSynonym, $finalDestinationName. ";
             }
         }
     
         return [           
                 'path' => $path,
                 'instructions'=>$instructions,
-                       // 'node_distance_direction_array'=>$nodeDistanceDirArray
+                'node_distance_direction_array'=>$nodeDistanceDirArray
                         
                 ];
     }
     
 
+    // Function to generate an MP3 file from text
+    public static function generateMP3FromText($text, $lang = "en") {
+        // Generate a unique filename using MD5 hash
+        $file = md5($lang . "?" . urlencode($text)) . ".mp3";
+        $filepath = "audio/" . $file;
+
+        // Check if the 'audio' directory exists, create it if it doesn't
+        if (!is_dir("audio/")) {
+            mkdir("audio/", 0777, true);
+        } else {
+            if (substr(sprintf('%o', fileperms('audio/')), -4) != "0777") {
+                chmod("audio/", 0777);
+            }
+        }
+
+        // Function to fetch the MP3 content using cURL with user-agent
+        function fetchMp3($url) {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3');
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                echo 'Curl error: ' . curl_error($ch);
+                return false;
+            }
+
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if ($httpCode !== 200) {
+                echo "HTTP error: " . $httpCode;
+                return false;
+            }
+
+            curl_close($ch);
+            return $response;
+        }
+
+        // Generate the URL for the Google Translate TTS service
+        $url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=' . urlencode($text) . '&tl=' . $lang . '&total=1&idx=0&textlen=5&prev=input&client=tw-ob';
+
+        // Fetch the MP3 content
+        $mp3 = fetchMp3($url);
+
+        // Delete the old MP3 file if it exists
+        if (file_exists($filepath)) {
+            if (!unlink($filepath)) {
+                echo "Failed to delete old MP3 file<br>";
+                return false;
+            }
+        }
+
+        // Write the new MP3 file to the 'audio' directory
+        if ($mp3 !== false) {
+            if (file_put_contents($filepath, $mp3) === false) {
+                echo "Failed to write the MP3 file";
+                return false;
+            } else {
+                echo "MP3 file written successfully<br>";
+                return $filepath; // Return the filepath if successful
+            }
+        } else {
+            echo "Failed to fetch the MP3 content";
+            return false;
+        }
+    }
+    // end generate an MP3 file from text
+
 }
+?>
