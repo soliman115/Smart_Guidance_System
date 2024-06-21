@@ -9,9 +9,11 @@
         "cion/laravel-text-to-speech": "^1.5",
         "google/cloud-text-to-speech": "^1.8",
         "guzzlehttp/guzzle": "^7.2",
+        "ichtrojan/laravel-otp": "^2.0",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
