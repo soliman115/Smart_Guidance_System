@@ -6,17 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Visit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VisitsController extends Controller
 {
     public function storeVisit(Request $request)
     {
         //Get authenticated user ID
-        $userId = Auth::id();
-        if (!$userId) {
-            return response()->json(['error' => 'Unauthorized access'], 401);
-        }
+        $userId = auth()->id();
+
+//        if (!$userId) {
+//            return response()->json(['error' => 'Unauthorized access'], 401);
+//        }
 
         // Validate the request
         $request->validate([
