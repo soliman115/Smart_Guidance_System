@@ -101,16 +101,19 @@ class RouteController extends Controller
         $pathWithInstructions = GraphUtility::generateNavigationInstructions($navigationData);
 
 
-        // $ttsText = $pathWithInstructions['instructions']; 
-        // $instructionsWithAudio = GraphUtility::generateMP3FromText($ttsText );
-        // $fullInstructions = $pathWithInstructions . $instructionsWithAudio; 
-
-
-        return $pathWithInstructions;
+        $ttsText = $pathWithInstructions['instructions']; 
+        $instructionsAudio = GraphUtility::generateMP3FromText($ttsText );
         
+        //append the instructionsAudio to pathWithInstructions
+        $pathWithInstructions['instructionsAudio'] = $instructionsAudio;
+
+        // Return the combined pathWithInstructions
+        return $pathWithInstructions;
+
     }//end find best path 
 
 
+    
 
 }
 
