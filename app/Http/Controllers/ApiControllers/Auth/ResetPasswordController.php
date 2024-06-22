@@ -10,13 +10,14 @@ use Ichtrojan\Otp\Otp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
     private $otp;
 
-    public function __construct()
+    public function __construct(Otp $otp)
     {
         $this->otp = new Otp;
     }
@@ -30,10 +31,7 @@ class ResetPasswordController extends Controller
         }
 
         // OTP is valid, generate a token
-        $token = Str::random(60);
-
-        // Store the token in cache with the email
-        Cache::put($token, $request->email, now()->addMinutes(30));
+        $token = Password::createToken(User::where('email', $request->email)->first());
 
         // Return the token
         return response()->json([
@@ -44,24 +42,21 @@ class ResetPasswordController extends Controller
     }
     public function updatePassword(ResetPasswordRequest $request)
     {
-        // Retrieve email from token
-        $email = Cache::get($request->token);
-
-        if (!$email) {
+        $resetPasswordStatus = Password::reset(
+            $request->only('email','token','password', 'password_confirmation'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                ])->save();
+            }
+        );
+        if ($resetPasswordStatus == Password::PASSWORD_RESET) {
+            return response()->json([
+                'success' => true,
+                'message' => 'User password updated successfully',
+            ], 200);
+        } else {
             return response()->json(['error' => 'Invalid or expired token'], 401);
         }
-
-        // Update the user's password
-        $user = User::where('email', $email)->firstOrFail();
-        $user->update(['password' => Hash::make($request->password)]);
-        $user->tokens()->delete();
-
-        // Invalidate the token
-        Cache::forget($request->token);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User password updated successfully',
-        ], 200);
     }
 }
