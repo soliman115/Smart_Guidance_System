@@ -24,11 +24,11 @@ class UpdateInfoFormRequest extends FormRequest
     public function rules()
     {
         return [
-           'username'=>'required',
-           'phone'=>'required',
-           'email'=>'required|unique:users',
-           'password'=>'required',
-           'image'=>'filled',
+            'username' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|unique:users,email,' . $this->user()->id,
+            'password' => 'nullable|string',
+            'image' => 'filled',
+            'phone' => 'nullable|unique:users,phone|string|max:12',
         ];
     }
 }
