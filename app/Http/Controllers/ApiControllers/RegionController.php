@@ -26,8 +26,8 @@ class RegionController extends Controller
             return "Error: " . $validator->errors();
         }
         Region::create($request->all());
-        $region= $request->region_name;
-        return "Record with region  $region inserted successfully!";
+        $region_id= $request->id;
+        return "Region with id  $region_id inserted successfully!";
     }//end insert
 
 //retrive Regions
@@ -46,7 +46,6 @@ public function updateRegion(Request $request, $id)
 {
     $validator = Validator::make($request->all(), [
             'id' => 'required|unique:Regions,id,'.$request->id,
-            //'id' => 'required|exists:Regions',
             'name' => 'required|unique:places,name',
             'x_coordinate' => 'required',
             'y_coordinate' => 'required'
@@ -62,10 +61,8 @@ public function updateRegion(Request $request, $id)
     }
     
     $Region->update($request->all());
-   
-    //$Region= Region::create($validator->validated());
 
-    return "Record with id $request->id updated successfully!";
+    return "Region with id $request->id updated successfully!";
 }//end update
 
 //delete Regions
