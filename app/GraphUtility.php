@@ -45,6 +45,8 @@ class GraphUtility
         return $graph;
     }//end constructGraphFromDatabase
 
+
+    //function to findShortestPath
     public static function findShortestPath($source, $destination)
     {
         $finalDestinationId=$destination;
@@ -193,7 +195,8 @@ class GraphUtility
             'node_distance_direction_array' => $nodeDistanceDirArray,
             'total_distance' => $totalDistance
         ];
-    }// end get the path
+    }//function to findShortestPath
+
 
     //generateNavigationInstructions
     public static function generateNavigationInstructions($navigationData) {
