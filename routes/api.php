@@ -1,15 +1,19 @@
 <?php
 
 use App\Http\Controllers\ApiControllers\AdminDashboardController;
-use App\Http\Controllers\ApiControllers\AuthController;
+use App\Http\Controllers\ApiControllers\Auth\ForgetPasswordController;
+use App\Http\Controllers\ApiControllers\Auth\LoginController;
+use App\Http\Controllers\ApiControllers\Auth\LogoutController;
+use App\Http\Controllers\ApiControllers\Auth\ProfileController;
+use App\Http\Controllers\ApiControllers\Auth\RegisterController;
+use App\Http\Controllers\ApiControllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ApiControllers\Auth\UpdateProfileController;
 use App\Http\Controllers\ApiControllers\BuildingController;
-use App\Http\Controllers\ApiControllers\EmailController;
 use App\Http\Controllers\ApiControllers\EmployeeController;
 use App\Http\Controllers\ApiControllers\PlaceController;
 use App\Http\Controllers\ApiControllers\RegionController;
 use App\Http\Controllers\ApiControllers\RouteController;
 use App\Http\Controllers\ApiControllers\ServiceController;
-use App\Http\Controllers\ApiControllers\UserController;
 use App\Http\Controllers\ApiControllers\UserDashboardController;
 use App\Http\Controllers\ApiControllers\VisitsController;
 use Illuminate\Support\Facades\Route;
@@ -57,18 +61,6 @@ Route::get('/map', [MapController::class, 'getMaps']);
 
 
 //CURD buildings
-
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
-Route::post('/check-code',[AuthController::class,'check_code']);
-Route::post('/new-password',[AuthController::class,'new_password']);
-
-Route::post('forget-password', [EmailController::class,'send']);
-
-
-Route::group(['prefix'=>'/profile'],function (){
-    Route::post('/update',[UserController::class,'update_info']);
-});
 
 #get all building
 Route::get('buildings', [BuildingController::class, 'index']);
@@ -122,28 +114,39 @@ Route::post('employee', [EmployeeController::class, 'store']);
 Route::post('updateemployee/{id}', [EmployeeController::class, 'update']);
 Route::post('/deleteemployee/{id}', [EmployeeController::class, 'destroy']);
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
 
-//login & register
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
-Route::post('/check-code',[AuthController::class,'check_code']);
-Route::post('/new-password',[AuthController::class,'new_password']);
-
-Route::post('forget-password', [EmailController::class,'send']);
-
-Route::get('send-mail', function () {
+], function ($router) {
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/register', [RegisterController::class, 'register']);
+    Route::post('/logout', [LogoutController::class, 'logout']);
+    Route::get('/profile',[ProfileController::class,'profile']);
+    Route::group(['prefix'=>'/profile'],function (){
+        Route::post('/update',[UpdateProfileController::class,'update_info']);
+    });
 
 });
+//forget & reset password
+Route::post('/forget-password', [ForgetPasswordController::class,'ForgetPassword']);
+Route::post('/verify-otp',[ResetPasswordController::class,'verifyOtp']);
+Route::post('/update-password',[ResetPasswordController::class,'updatePassword']);
+Route::group(['middleware' => ['jwt.verify']], function() {
+    //userDashboard
+    Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
+    //storeVisit
+    Route::post('/store-visit',[VisitsController::class,'storeVisit']);
 
-
-Route::group(['prefix'=>'/profile'],function (){
-    Route::post('/update',[UserController::class,'update_info']);
 });
-
-//Dashboard
+//adminDashboard
 Route::get('/admin-dashboard', [AdminDashboardController::class, 'getAdminStatistics']);
-Route::get('/user-dashboard', [UserDashboardController::class, 'getUserStatistics']);
-//storeVisit
-Route::post('/store-visit',[VisitsController::class,'storeVisit']);
+
+
+
+
+
+
+
 
 
