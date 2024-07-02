@@ -5,21 +5,28 @@ namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVisitRequest;
 use App\Models\Visit;
+use App\Models\Place; // Assuming you have a Place model
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class VisitsController extends Controller
 {
-    public function storeVisit(StoreVisitRequest  $request): JsonResponse
+    public function storeVisit(StoreVisitRequest $request): JsonResponse
     {
-        //Get authenticated user ID
+        // Get authenticated user ID
         $userId = Auth::id();
 
         // Get the selected place ID from the request
         $selectedPlaceId = $request->input('place');
+
+        // Fetch the place details
+        $place = Place::find($selectedPlaceId);
+
+        if (!$place) {
+            return response()->json(['error' => 'Selected place not found.'], 404);
+        }
 
         // Record the visit
         try {
@@ -28,9 +35,16 @@ class VisitsController extends Controller
                 'place_id' => $selectedPlaceId,
                 'visited_at' => Carbon::now(),
             ]);
+
             return response()->json([
                 'message' => 'Visit created successfully',
-                'visit' => $visit,
+                'visit' => [
+                    'id' => $visit->id,
+                    'user_id' => $visit->user_id,
+                    'place_id' => $visit->place_id,
+                    'place_name' => $place->name,
+                    'visited_at' => $visit->visited_at,
+                ],
             ], 201);
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['error' => 'Database error. Please try again.'], 500);
