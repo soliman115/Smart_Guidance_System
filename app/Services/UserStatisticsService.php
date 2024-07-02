@@ -26,7 +26,13 @@ class UserStatisticsService
 
         // Retrieve the authenticated user and their visit history with place names
         $user = User::with(['visits.place'])->find($userId); // Load places associated with visits
-        $userVisitHistory = $user->visits->map(function ($visit) {
+
+        // Fetch user visits and sort by visited_at in descending order (latest first)
+        $userVisits = $user->visits()
+            ->orderBy('visited_at', 'desc')
+            ->get();
+        
+        $userVisitHistory = $userVisits->map(function ($visit) {
             return [
                 'visited_place' => $visit->place->name,
                 'visited_at' => $visit->visited_at,
