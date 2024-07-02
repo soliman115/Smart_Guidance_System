@@ -24,9 +24,14 @@ class UserStatisticsService
         // Total number of services
         $totalServices = Service::count();
 
-        // Retrieve the authenticated user and their visit history
-        $user = User::with('visits')->find($userId);
-        $userVisitHistory = $user->visits ?? [];
+        // Retrieve the authenticated user and their visit history with place names
+        $user = User::with(['visits.place'])->find($userId); // Load places associated with visits
+        $userVisitHistory = $user->visits->map(function ($visit) {
+            return [
+                'visited_place' => $visit->place->name,
+                'visited_at' => $visit->visited_at,
+            ];
+        });
 
         // Retrieve top popular locations with visit counts
         $topPopularLocations = $this->getTopPopularLocations();
